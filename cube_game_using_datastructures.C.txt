@@ -1,0 +1,166 @@
+#include<graphics.h>
+#include<conio.h>
+#include<stdio.h>
+#include<dos.h>
+#include<stdlib.h>
+int t=0,u=-40,v=-80,x2=100,score=0;//for obstacles
+int y=300;
+int volume=100;
+int speed=700;
+void leftpart();
+void emoji();//opening emoji
+ void control( ); //controls
+void freq(); //movements of lines
+void song();//background song
+void obst();//main part
+void main ()
+{
+	int gd=DETECT,gm;
+	clrscr();
+	      initgraph(&gd,&gm,"c:\\turboc3\\bgi");
+	      while(kbhit()==0){
+		    setcolor(15);
+	       settextstyle(9,HORIZ_DIR,1);
+	      outtextxy(120,120,"WELCOME TO CUBE GAME");
+	       setcolor(BLUE);
+	      settextstyle(3,HORIZ_DIR,1);
+	      outtextxy(150,180,"enter any key to start the game_..");
+	    emoji();
+	      setbkcolor(3);
+
+	      }
+	      cleardevice();
+	      obst();
+
+
+
+
+
+	      closegraph();
+	  getch();
+
+}
+void control()
+{
+	char ch;
+	ch=getch();
+	if(y==20)
+	y=40;
+	if(y==420)
+	y=400;
+	switch(ch)
+	{
+
+		case 'd': {y=y+20; break;}
+		case 'a': {y=y-20; break;}
+		case 'e': { nosound(); exit(0); }
+
+      }
+
+		bar(y,370,y+20,350);
+
+
+
+
+     obst();
+}
+void obst()
+{
+
+	while(kbhit()==0)
+	{
+		 cleardevice();
+		     song();
+		 setbkcolor(7);//lightgreen
+		 setcolor(15);
+			   setfillstyle(SOLID_FILL,RED);
+		rectangle(y,370,y+20,350);
+
+		 floodfill(y+10,360,WHITE);
+			      setcolor(BLUE);
+
+		if(((t<=370)&&(t>=350)&&(y>=20&&y<=250))||((u<=370&&u>=300)&&(y>=300&&y<=440))||((v<=370&&v>=300)&&(y>=100&&y<=370)))
+		{                delay(2000);
+			cleardevice();
+			setbkcolor(BLUE);
+			setcolor(RED);
+			  settextstyle(3,HORIZ_DIR,4);
+			outtextxy(230,220,"Game over!!!\n");
+
+			gotoxy(60,5);
+			printf("YOUR SCORE=%d",score);
+			nosound();
+			delay(1000);
+			exit(0);
+			}
+		freq();
+		leftpart();
+		line(20,10,20,470);  //side lines of road
+		line(450,10,450,470);  //side lines of road vertical/
+		    score++;
+
+	      delay(speed=speed-5);
+	      if(speed==200)
+	      speed=205;
+
+	}
+	control();
+ }
+ void freq()
+ {
+		line(20,t,250,t);
+		t=t+40;
+			line(300,u,440,u);
+		u=u+40;
+			line(100,v,370,v);
+		v=v+40;
+		if(t==440)
+		t=0;
+		else if(u==440)
+		u=-40;
+		else if(v==440)
+		v=-80;
+	}
+void emoji()
+{                setcolor(15);
+	rectangle(200,250,400,450);
+	 setcolor(15);
+			   setfillstyle(SOLID_FILL,BLUE);
+
+
+
+	circle(250,300,10);
+	circle(350,300,15);
+	 floodfill(y+10,360,WHITE);
+	arc(300,300,240,300,80);
+ }
+ void song()
+ {         delay(40);
+	 sound(volume);
+		      volume++;
+		      if(volume==1000)
+		      volume=50;
+		      delay(40);
+  }
+  void leftpart()
+  {
+	  gotoxy(58,3);
+		    printf("YOUR SCORE=%d",score);
+		     gotoxy(58,6);
+		    printf("INSTRUCTIONS");
+		     gotoxy(58,7);
+		    printf("PRESS 'a' TO MOVE LEFT ");
+		     gotoxy(58,8);
+		    printf("PRESS 'd; TO MOVE RIGHT");
+		     gotoxy(58,9);
+		    printf("PRESS 'e' TO EXIT");
+		    setcolor(15);
+		   //  settextstyle(3,HORIZ_DIR,1);
+	      gotoxy(60,20);
+	      printf(" CUBE GAME");
+	     //  outtextxy(60,22,"COURSE BASED PROJECT OF IT -B");
+	     gotoxy(58,22);
+		printf("COURSE BASED PROJECT");
+	     gotoxy(62,23);
+	     printf("OF IT-B");
+  }
